@@ -62,14 +62,14 @@ public class nelsonTask1
 	     * Simple array printer: look at each row, print whatever is in each
 	     * column, add some space, then iterate down to the next row.
 	     */
-	    for (int row = 0; row < 8; row++)				          		// iterate through the rows
+	    for (int row = 0; row < 8; row++) // iterate through the rows
 	    {
-	    		System.out.print("| ");						          	  	// print the first spacer for each row
-	    		for (int col = 0; col < 8; col++)		        			// iterate through the columns
+	    		System.out.print("| "); // print the first spacer for each row
+	    		for (int col = 0; col < 8; col++)// iterate through the columns
 	    		{
-	    			System.out.print(queenArray[row][col] + " | ");	// print the contents + spacer
+	    			System.out.print(queenArray[row][col] + " | "); // print the contents + spacer
 	    		}
-	    		System.out.println();						               		// make sure each row is on a new line
+	    		System.out.println(); // make sure each row is on a new line
 	    }
 	}
 }
