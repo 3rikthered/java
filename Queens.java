@@ -1,33 +1,6 @@
-/*
- * I declare that all material in this assessment task is my own work
- * except where there is clear acknowledgement or reference to the work
- * of others. I further declare that I have complied with, and agree to
- * abide by, the UIS Academic Integrity Policy at the University website.
- * http://www.uis.edu/academicintegrity
- * 
- * Author’s Name: Erik Nelson UID: ******** Date: 01/20/2019
- */
-
-
-/* 
- * I had no previous experience filling empty arrays with a default value
- * before this assignment. Because of this, I had to look up how to do so,
- * and found a solution on stackoverflow, utilizing Arrays.fill. I had to
- * modify the code very slightly, in that my array is of chars rather than
- * doubles.
- * 
- * Listed below is the referenced site, using the solution provided by
- * aioobe on 08/19/2011
- * 
- * https://stackoverflow.com/questions/7118178/arrays-fill-with-multidimensional-array-in-java
- */
-
-
-package nelsonTask1;
-
 import java.util.Arrays;
 
-public class nelsonTask1
+public class queens
 {
 	public static void main(String[] args)
 	{
