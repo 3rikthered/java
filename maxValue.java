@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class nelsonTask1
 {
+	// Main method
 	public static void main(String[] args)
 	{
 		// initialize scanner
@@ -34,28 +35,40 @@ public class nelsonTask1
 			}
 		}
 		
+		// Close the stinkin' scanner!!
+		input.close();
+
 		// Use the locateLargest method on the array
-		Location locateLargestValue = locateLargest(a);
+		Location maxValueOfA = locateLargest(a);
 		
-		
+		// Print the results
+		System.out.print("The largest element is " + maxValueOfA.maxValue +
+				         ". It is located at (" + maxValueOfA.row +
+				         ", " + maxValueOfA.column + ")");
 		
 	}
 
+	
+	// locateLargest method
 	public static Location locateLargest(double[][] a)
 	{
-		double maxValue = a[0][0];
+		// Create an instance of the Location class
+		// initial values must all be zero
+		Location location = new Location(0, 0, 0);
 		
 		for (int rows = 0; rows < a.length; rows++)
 		{
 			for (int columns = 0; columns < a[0].length; columns++)
 			{
-				if (a[rows][columns] > maxValue)
+				if (a[rows][columns] > location.maxValue)
 				{
-					maxValue = a[rows][columns];
+					location.row = rows;
+					location.column = columns;
+					location.maxValue = a[rows][columns];
 				}
 			}
 		}
-		return maxValue;
+		return location;
 	}
 }
 
@@ -64,4 +77,12 @@ public class Location
 	public int row;
 	public int column;
 	public double maxValue;
+	
+	// Constructor
+	Location(int row, int column, double maxValue)
+	{
+		this.row = row;
+		this.column = column;
+		this.maxValue = maxValue;
+	}
 }
