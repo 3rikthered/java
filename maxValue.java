@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class nelsonTask1
+public class maxValueInArray
 {
 	// Main method
 	public static void main(String[] args)
