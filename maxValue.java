@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class maxValueInArray
+ class Main
 {
 	// Main method
 	public static void main(String[] args)
@@ -70,19 +70,19 @@ public class maxValueInArray
 		}
 		return location;
 	}
-}
 
-public class Location
-{
-	public int row;
-	public int column;
-	public double maxValue;
-	
-	// Constructor
-	Location(int row, int column, double maxValue)
+ 	static class Location
 	{
-		this.row = row;
-		this.column = column;
-		this.maxValue = maxValue;
+	 	int row;
+	 	int column;
+	 	double maxValue;
+	
+		// Constructor
+		Location(int row, int column, double maxValue)
+		{
+			this.row = row;
+			this.column = column;
+			this.maxValue = maxValue;
+		}
 	}
 }
