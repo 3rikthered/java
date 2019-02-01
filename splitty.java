@@ -37,27 +37,52 @@ LOOK INTO string.replaceAll()
 
 */
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 class Main 
 {
   public static void main(String[] args)
   {
-    // Input string here
-    String str = "Hello world%Goodbye world";
+    // Initialize Scanner and string
+    Scanner input = new Scanner(System.in);
+    String s;
+    String regex;
 
-    String[] holder = split(str);
+    System.out.println("Input?");
+    s = input.nextLine();
 
-    for (int i = 0; i < holder.length; i++)
-    {
-      System.out.print(holder[i] + "\n");
-    }
+    System.out.println("Delimiters?");
+    regex = input.nextLine();
+
+    //
+    String[] holder = split(s, regex);
+
+    // Get the printout
+    System.out.print(Arrays.toString(holder));
+    //for (int i = 0; i < holder.length; i++)
+    //{
+      //System.out.print(holder[i] + "\n");
+    //}
   
   }
 
-  public static String[] split(String s)
-  {
-     s = s.replaceAll("%", "__SPLITHERE__%__SPLITHERE__");
+  // Regex method, converts characters
 
-    String[] splitty = s.split("__SPLITHERE__");
+  // Splitter method, accepts a string and delimiters
+  public static String[] split(String s, String regex)
+  {
+    // Separate the regex into an array
+    String[] delimiters = regex.split("");
+
+    // Searches for all regex delimiters in the string,
+    // Adds a new delimiter on each side of the regex delimiter
+    for (int i = 0; i < delimiters.length; i++){
+          s = s.replaceAll(delimiters[i], "!!SPLITHERE!!" + delimiters[i] + "!!SPLITHERE!!");
+    }
+
+    // Creates an array that splits the string based on the new delimiter
+    String[] splitty = s.split("!!SPLITHERE!!");
 
     return splitty;
   }
