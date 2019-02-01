@@ -44,24 +44,21 @@ class Main
     // Input string here
     String str = "Hello world%Goodbye world";
 
-    System.out.print(split(str));
+    String[] holder = split(str);
 
-
-    
-
+    for (int i = 0; i < holder.length; i++)
+    {
+      System.out.print(holder[i] + "\n");
+    }
   
   }
 
   public static String[] split(String s)
   {
-     s = s.replaceAll(" ", "NOREPLACEME").replaceAll("%", " ");
+     s = s.replaceAll("%", "__SPLITHERE__%__SPLITHERE__");
 
-    String[] splitty = s.split(" ");
+    String[] splitty = s.split("__SPLITHERE__");
 
-    for (int i = 0; i < splitty.length; i++)
-    {
-      splitty[i] = (splitty[i].replaceAll("NOREPLACEME", " "));
-    }
     return splitty;
   }
 }
