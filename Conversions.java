@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class nelsonTask6 {
+public class Conversions {
 	
 	static Scanner input = new Scanner(System.in);
 
