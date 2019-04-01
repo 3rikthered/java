@@ -1,5 +1,3 @@
-package nelsonTask6;
-
 import java.util.Scanner;
 
 public class nelsonTask6 {
