@@ -90,11 +90,8 @@ public class nelsonTask7
 			char value = postfixExpression.charAt(i);
 			
 			
-			if (Character.isDigit(value))
-			{
-				stack.push(value - '0');
-			}
-			else
+			
+			if (isOperator(value))
 			{
 				switch(value)
 				{
@@ -107,8 +104,13 @@ public class nelsonTask7
 					case '*': stack = multiplication(stack);
 						  	  break;
 					case '^': stack = exponent(stack);
-					case ' ': break;
 				}
+			}
+			
+			// Do something in here to fix single-digits issue
+			else if (Character.isDigit(value))
+			{
+				stack.push(value - '0');
 			}
 		}
 		
