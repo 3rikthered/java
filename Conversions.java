@@ -1,17 +1,15 @@
 package nelsonTask7;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
-
-// POSTFIX ONLY WORKING ON SINGLE DIGIT INPUT....FIX IT
 public class nelsonTask7
 {
-	
 	public static void main(String[] args)
-	{
-		
+	{	
 		Scanner input = new Scanner(System.in);
 		int choice = 0;
 		while (choice != 4)
@@ -84,33 +82,31 @@ public class nelsonTask7
 	private static void postfix(String postfixExpression)
 	{				
 		Stack<Integer> stack = new Stack<>();
-				
-		for (int i = 0; i < postfixExpression.length(); i++)
+		List<String> parsed = parser(postfixExpression);
+			
+		for (int i = 0; i < parsed.size(); i++)
 		{
-			char value = postfixExpression.charAt(i);
+			String value = parsed.get(i);
 			
-			
-			
-			if (isOperator(value))
+			if (operatorsList.contains(value))
 			{
 				switch(value)
 				{
-					case '+': stack = addition(stack);
+					case "+": stack = addition(stack);
 							  break;
-					case '-': stack = subtraction(stack);
+					case "-": stack = subtraction(stack);
 							  break;
-					case '/': stack = division(stack);
+					case "*": stack = multiplication(stack);
 						  	  break;
-					case '*': stack = multiplication(stack);
+					case "/": stack = division(stack);
 						  	  break;
-					case '^': stack = exponent(stack);
+					case "^": stack = exponent(stack);
 				}
 			}
 			
-			// Do something in here to fix single-digits issue
-			else if (Character.isDigit(value))
+			else
 			{
-				stack.push(value - '0');
+				stack.push(Integer.valueOf(value));
 			}
 		}
 		
@@ -171,77 +167,80 @@ public class nelsonTask7
 	///////////////////////////////////////////
 	private static void infix2postfix(String infixExpression)
 	{		
-		Stack<Character> charStack = new Stack<Character>();
-		
+		Stack<String> stack = new Stack<>();
+		List<String> parsed = parser(infixExpression);
+
 		String postfixExpression = "";
 		
-		for (int i = 0; i < infixExpression.length(); i++)
+		for (int i = 0; i < parsed.size(); i++)
 		{
-			char c = infixExpression.charAt(i);
-			
-			switch(c)
+			String value = parsed.get(i);
+						
+			switch(value)
 			{
-				case '(': charStack.push(c);
+				case "(": stack.push(value);
 						  break;
-				case ')': while(!charStack.isEmpty() && charStack.peek() != '(')
+				case ")": while(!stack.isEmpty() && stack.peek() != "(")
 						  {
-								postfixExpression += charStack.pop();
+								postfixExpression += stack.pop();
 						  }
 						  break;
-				default:  if (isOperator(c))
+				default:  if (operatorsList.contains(value))
 						  {
-						  		while (!charStack.isEmpty() && precedence(c) <= precedence(charStack.peek()))
+						  		while (!stack.isEmpty() && precedence(value) <= precedence(stack.peek()))
 						  		{
-						  			postfixExpression += charStack.pop();
+						  			postfixExpression += stack.pop();
 						  		}
-						  		charStack.push(c);
+						  		stack.push(value);
 						  }
-						  else if (Character.isDigit(c))
+						  else
 						  {
-							  	postfixExpression += c;
+							  	postfixExpression += (value + " ");
 						  }
 						  break;
 			}
 		}
 		
-		while (!charStack.isEmpty())
+		while (!stack.isEmpty())
 		{
-			postfixExpression += charStack.pop();
+			postfixExpression += stack.pop();
 		}
+		
+		// Removes beginning parentheses from the postfixExpression
+		postfixExpression = postfixExpression.replaceAll("\\(", " ");
 		
 		System.out.print("\n" + infixExpression + " = " + postfixExpression);
 		postfix(postfixExpression);
 	}
-	
-	// reference hashset for operators
-	private static final HashSet<Character> operators = new HashSet<Character>();
-	
-	static
-	{
-		operators.add('+');
-		operators.add('-');
-		operators.add('*');
-		operators.add('/');
-		operators.add('^');
-	}
-	
-	// check to see if the character is an operator
-	public static boolean isOperator(Character c)
-	{
-		return operators.contains(c);
-	}
 
 	// order of precedence for operators
-	private static int precedence(char c)
+	private static int precedence(String value)
 	{
-		switch (c)
+		switch (value)
 		{
-			case '+': return 1;
-			case '-': return 1;
-			case '*': return 2;
-			case '/': return 2;
-			case '^': return 3;
+			case "+": return 1;
+			case "-": return 1;
+			case "*": return 2;
+			case "/": return 2;
+			case "^": return 3;
 			default:  return 0;
 		}
 	}
+	
+	private static List<String> parser(String input)
+	{
+		input = input.replace("+", " + ");
+		input = input.replace("-", " - ");
+		input = input.replace("*", " * ");
+		input = input.replace("/", " / ");
+		input = input.replace("^", " ^ ");
+		input = input.replace("(", " ( ");
+		input = input.replace(")", " ) ");
+
+		List<String> list = new ArrayList<String>(Arrays.asList(input.split(" ")));
+		list.removeAll(Arrays.asList("", null));
+		return list;
+	}
+	
+	static List<String> operatorsList = new ArrayList<String>(Arrays.asList("+", "-", "*", "/", "^"));
 }
