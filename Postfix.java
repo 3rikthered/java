@@ -1,6 +1,7 @@
 package nelsonTask7;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -118,9 +119,8 @@ public class nelsonTask7
 		System.out.print("\n" + postfixExpression + " = " + stack.pop() + "\n\n");
 	}
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-	// MATHEMATIC OPERATORS: pop the last 2 elements in the stack, then perform the appropriate
-	// mathematic operation against them.
+	// MATHEMATIC OPERATORS: pop the last 2 elements in the stack, perform the appropriate
+	// mathematic operation against them, returns the stack
 	private static Stack<Integer> exponent(Stack<Integer> stack) {
 		int lastInt = stack.pop();
 		int secondLastInt = stack.pop();
@@ -169,7 +169,6 @@ public class nelsonTask7
 		
 		return stack;
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////
 	// Convert infix to postfix and evaluate //
@@ -280,30 +279,43 @@ public class nelsonTask7
 		
 		LinkedList<String> list = importer(fileName, input);
 		
-		// alphebetizes the list
-		list.sort(String::compareToIgnoreCase);
-		
-		// dedupes the list
-		list = dedupe(list);
+		// dedupes and alphebetizes the list
+		list = dedupeAndAlphebetize(list);
+				
+		if (list.size() % 4 != 0)
+		{
+			for (int i = 0; i < list.size() % 4; i++)
+			{
+				list.offerFirst("");
+			}
+		}
+
 		
 		// Prints the list out in descending alphabetic order
 		//!!!!!!!!!!!!!!!!!!! FIND A WAY TO PRINT FOUR WORDS PER LINE WITHOUT THROWING EXCEPTION
 		ListIterator<String> iterator = list.listIterator(list.size());
 		while (iterator.hasPrevious())
 		{
-			System.out.println(iterator.previous());
+			System.out.print(iterator.previous() + "	" +
+							 iterator.previous() + "	" +
+							 iterator.previous() + "	" +
+							 iterator.previous() + "\n");
 		}
+		
+		System.out.print("\n");
 	}
 
 	// Imports the file and reads it into the LinkedList
 	public static LinkedList<String> importer(String fileName, Scanner input) throws Exception
 	{
+		File file = new File(fileName);
+		
 		LinkedList<String> list = new LinkedList<String>();
 		
 		try
 		{
-			// check if the filename is correct
-			if (fileName.equals("hangman.txt"))
+			// check if the file exists
+			if (file.isFile())
 			{
 				// reads the file
 				BufferedReader readFile = new BufferedReader(new FileReader(fileName));
@@ -339,12 +351,13 @@ public class nelsonTask7
 		@Override
 		public String getMessage()
 		{
-			return "EXCEPTION: File must be \"hangman.txt\"\n";
+			return "EXCEPTION: File does not exist";
 		}
 	}
 	
-	// To dedupe the linkedlist, converts it to a case-insensitive treeset, then converts back.
-	public static LinkedList<String> dedupe(LinkedList<String> list)
+	// To dedupe and alphebetize the linkedlist, converts it to a
+	// case-insensitive treeset, then converts back.
+	private static LinkedList<String> dedupeAndAlphebetize(LinkedList<String> list)
 	{
 		TreeSet<String> set = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 		
